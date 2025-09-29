@@ -4,9 +4,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import yfinance as yf
+import datetime as date
 
 # Download historical data for S&P 500
-data = yf.download('^GSPC', start='2000-01-01', end='2025-09-29')
+data = yf.download('^GSPC', start='2000-01-01', end=date.datetime.today())
 data = data['Close']
 data = data.dropna()
 data = pd.DataFrame(data)
