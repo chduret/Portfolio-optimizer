@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 
 # Download historical data for S&P 500
-data = yf.download('^GSPC', start='2020-01-01', end='2023-01-01')
+data = yf.download('^GSPC', start='2000-01-01', end='2025-09-29')
 data = data['Close']
 data = data.dropna()
 data = pd.DataFrame(data)
@@ -24,3 +24,10 @@ data = data.dropna()
 data['CumulativeLogReturn'] = data['LogReturn'].cumsum()
 data = data.dropna() 
 print(data.head())
+
+"""
+We now have the close prices, daily returns, log returns, daily volatility, 
+annualized volatility, cumulative returns, 
+and cumulative log returns for the S&P 500 index from January 1, 2020, to January 1, 2023.
+"""
+print(data["2025-01-01":"2025-09-29"])
