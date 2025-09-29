@@ -40,9 +40,9 @@ def calculate_returns(data):
 def calculate_volatility(returns):
     ## Daily volatility
     ### Rolling window is set to 21 days (approximately one month - can be 3 months or 1 year: window=252)
-    Dayly_vol = returns.rolling(window=21).std()
+    Daily_vol = returns.rolling(window=21).std()
     Ann_vol = returns.rolling(window=21).std() * np.sqrt(252)  # Annualized volatility
-    return volatility
+    return Daily_vol, Ann_vol
 
 # Calculate covariance matrix
 def calculate_covariance(returns):
