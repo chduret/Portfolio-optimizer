@@ -24,14 +24,17 @@ def ann_ret(data):
     annualized_return = (1 + mean_daily_returns) ** 252 - 1
     return annualized_return
 
-def ann_vol(data):
+#Volatility using rolling window 
+def ann_vol(data, window=63):
     daily_returns = data['Adj Close'].pct_change().dropna()
-    daily_volatility = daily_returns.std()
-    annualized_volatility = daily_volatility * np.sqrt(252)
-    return annualized_volatility
+    rolling_volatility = daily_returns.rolling(window=window).std()
+    annualized_rolling_volatility = rolling_volatility * np.sqrt(252)
+    return annualized_rolling_volatility
 
-def daily_vol(data):
+def daily_vol(data, window=63):
     daily_returns = data['Adj Close'].pct_change().dropna()
-    daily_volatility = daily_returns.std()
-    return daily_volatility
+    rolling_volatility = daily_returns.rolling(window=window).std()
+    return rolling_volatility
+
+
 
