@@ -1,5 +1,3 @@
-### Web Scrapping - S&p 500 Historical Data Analysis
-
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,9 +5,33 @@ import yfinance as yf
 import datetime as date
 import scipy.stats as stats
 
-def get_data():
+def get_prices(tickers, start="2000-01-01", end=None):
+    if end is None:
+        end=date.datetime.today()
+    
+    prices = yf.download(tickers, start=start, end=end)["Close"]
+
+    if isinstance(prices, pd.Series):
+        prices = prices.to_frame(name="Close")
+    
+    prices = prices.dropna()
+    return prices
+
+def get_risk_free(start="2000-01-01", end=None):
+    if end is None:
+        end = date.datetime.today()
+
+    rf_3m = yf.download("^IRX", start=start, end=end)["Close"] / 100
+    rf_10y = yf.download("^TNX", start=start, end=end)["Close"] / 100
+
+    risk_free = pd.DataFrame({"RiskFree_3M": rf_3m, "RiskFree_10Y": rf_10y})
+    risk_free = risk_free.dropna()
+    return risk_free
+
+
+def get_data(tickers):
     # Download historical data for S&P 500
-    data = yf.download('^GSPC', start='2000-01-01', end=date.datetime.today())
+    data = yf.download(tickers, start='2000-01-01', end=date.datetime.today())
 
     # Dowload risk free rate data (3-Month Treasury Bill and 10-Year Treasury Note)
     risk_free_3m = yf.download('^IRX', start='2000-01-01', end=date.datetime.today())
@@ -17,11 +39,13 @@ def get_data():
 
     # Closing prices
     data = data['Close']
+
+   # If it's a Series (single ticker), make it a DataFrame with a nice name
+    if isinstance(data, pd.Series):
+        data = data.to_frame(name="Close")
+
     data = data.dropna()
 
-    # Convert to DataFrame
-    data = pd.DataFrame(data)
-    data.columns = ['Close']
 
     # Daily returns
     data['Return'] = data['Close'].pct_change()
@@ -72,7 +96,11 @@ def get_data():
 
     return data
 
-SP500 = get_data()
+user_input = input("Entrez les tickers (séparés par des virgules) : ")
+tickers = [t.strip() for t in user_input.split(",") if t.strip()]
+
+
+SP500 = get_prices(tickers=tickers)
 
 #Save to CSV-file :
 #SP500.to_csv('SP500_Historical_Data.csv')
