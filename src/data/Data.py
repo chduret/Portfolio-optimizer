@@ -32,9 +32,16 @@ def returns(ticker):
     returns = get_prices(ticker).pct_change().dropna()
     return returns
 
-def volatility(ticker, window=21):
-    volatility = returns(get_prices(ticker)).rolling(window=window).std() * np.sqrt(252)
-    return volatility
+# Annual vol on 63 days (quarter)
+def volatility(ticker, window=63):
+    returns_data = returns(ticker)
+    vol = returns_data.rolling(window=window).std() * np.sqrt(252)
+    return vol
+
+def daily_vol(tickers, window=63):
+    returns_data= returns(tickers)
+    daily_vol = returns_data.rolling(window=window).std() 
+    return daily_vol
 
 #Test
 #ticker = ["AAPL", "GOOG", "MC.PA"]
@@ -46,6 +53,21 @@ def correlation_matrix(tickers):
     corr_matrix = returns_data.corr()
     return corr_matrix
 
+def covariance_matrix(tickers):
+    returns_data = returns(tickers)
+    cov_matrix = returns_data.cov()
+    return cov_matrix
+
+def mu(tickers):
+    returns_data = returns(tickers)
+    mu = returns_data.mean() * 252
+    return mu
+
+print(mu(["AAPL", "GOOG", "MC.PA"]))
+
+# Quick test
+
+"""
 if __name__ == "__main__":
     print("Running quick test…", flush=True)  # prints immediately
     tickers = ["AAPL", "MSFT", "TSLA"]
@@ -65,3 +87,8 @@ if __name__ == "__main__":
     corr = correlation_matrix(tickers)
     print("\nCorrelation matrix:")
     print(corr)
+
+    cov = covariance_matrix(tickers)
+    print("\nCovariance matrix:")   
+    print(cov)
+    """
