@@ -46,3 +46,22 @@ def correlation_matrix(tickers):
     corr_matrix = returns_data.corr()
     return corr_matrix
 
+if __name__ == "__main__":
+    print("Running quick test…", flush=True)  # prints immediately
+    tickers = ["AAPL", "MSFT", "TSLA"]
+
+    px = get_prices(tickers, start="2025-05-01")
+    print("\nPrices (tail):")
+    print(px.tail(), flush=True)
+
+    rets = returns(tickers)
+    print("\nReturns (tail):")
+    print(rets.tail(), flush=True)
+
+    vol = volatility(tickers, window=10)
+    print("\nVolatility (10d annualized, tail):")
+    print(vol.tail(), flush=True)
+
+    corr = correlation_matrix(tickers)
+    print("\nCorrelation matrix:")
+    print(corr)
