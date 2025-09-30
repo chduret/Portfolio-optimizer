@@ -40,12 +40,10 @@ def get_data(tickers):
     # Closing prices
     data = data['Close']
 
-   # If it's a Series (single ticker), make it a DataFrame with a nice name
     if isinstance(data, pd.Series):
         data = data.to_frame(name="Close")
 
     data = data.dropna()
-
 
     # Daily returns
     data['Return'] = data['Close'].pct_change()
