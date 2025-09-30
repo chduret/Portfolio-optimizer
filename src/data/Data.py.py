@@ -39,3 +39,10 @@ def volatility(ticker, window=21):
 #Test
 #ticker = ["AAPL", "GOOG", "MC.PA"]
 #print(returns(ticker).tail())
+
+# Matrice de corrélation
+def correlation_matrix(tickers):
+    returns_data = returns(tickers)
+    corr_matrix = returns_data.corr()
+    return corr_matrix
+
