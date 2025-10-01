@@ -53,17 +53,24 @@ def correlation_matrix(tickers):
     corr_matrix = returns_data.corr()
     return corr_matrix
 
+<<<<<<< HEAD
 def covariance_matrix(tickers):
     returns_data = returns(tickers)
     cov_matrix = returns_data.cov()
     return cov_matrix
 
+# Annualized expected returns
 def mu(tickers):
     returns_data = returns(tickers)
-    mu = returns_data.mean() * 252
-    return mu
+    mean_returns = returns_data.mean() * 252  # Annualized mean return
+    return mean_returns
 
-print(mu(["AAPL", "GOOG", "MC.PA"]))
+# Daily expected returns
+def day_mu(tickers):
+    returns_data = returns(tickers)
+    mean_returns = returns_data.mean()
+    return mean_returns
+
 
 # Quick test
 
@@ -88,7 +95,7 @@ if __name__ == "__main__":
     print("\nCorrelation matrix:")
     print(corr)
 
-    cov = covariance_matrix(tickers)
-    print("\nCovariance matrix:")   
-    print(cov)
     """
+
+
+
