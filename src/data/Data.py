@@ -80,14 +80,6 @@ def sharpe_ratio(tickers, rf ):
     sharpe = (er - rf) / vol.iloc[-1]
     return sharpe
 
-#Test 
-tickers = ["AAPL", "GOOG", "MC.PA"]
-print(mu(tickers))
-print(volatility(tickers).tail())
-print(risk_free)
-
-
-
 # Quick test
 
 """
