@@ -33,11 +33,12 @@ def returns(ticker):
     return returns
 
 # Annual vol on 63 days (quarter)
-def volatility(ticker, window=63):
-    returns_data = returns(ticker)
+def volatility(tickers, window=63):
+    returns_data = returns(tickers)
     vol = returns_data.rolling(window=window).std() * np.sqrt(252)
     return vol
 
+#Daily vol on 63 days (quarter)
 def daily_vol(tickers, window=63):
     returns_data= returns(tickers)
     daily_vol = returns_data.rolling(window=window).std() 
@@ -53,7 +54,7 @@ def correlation_matrix(tickers):
     corr_matrix = returns_data.corr()
     return corr_matrix
 
-<<<<<<< HEAD
+# Matrice de covariance
 def covariance_matrix(tickers):
     returns_data = returns(tickers)
     cov_matrix = returns_data.cov()
@@ -70,6 +71,21 @@ def day_mu(tickers):
     returns_data = returns(tickers)
     mean_returns = returns_data.mean()
     return mean_returns
+
+risk_free = get_risk_free()
+
+def sharpe_ratio(tickers, rf ):
+    er = mu(tickers)
+    vol = volatility(tickers)
+    sharpe = (er - rf) / vol.iloc[-1]
+    return sharpe
+
+#Test 
+tickers = ["AAPL", "GOOG", "MC.PA"]
+print(mu(tickers))
+print(volatility(tickers).tail())
+print(risk_free)
+
 
 
 # Quick test
