@@ -1,4 +1,4 @@
-from data import get_prices 
+from src.data.data import get_prices 
 
 def returns(ticker):
     returns = get_prices(ticker).pct_change().dropna()

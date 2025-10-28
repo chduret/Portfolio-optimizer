@@ -1,9 +1,6 @@
 import pandas as pd 
-import numpy as np
-import matplotlib.pyplot as plt
 import yfinance as yf
 import datetime as date
-import scipy.stats as stats
 
 def get_prices(tickers, start="2000-01-01", end=None):
     if end is None:
@@ -28,36 +25,6 @@ def get_risk_free(start="2000-01-01", end=None):
     risk_free = risk_free.dropna()
     return risk_free
 
-
-# Matrice de corrélation
-def correlation_matrix(tickers):
-    returns_data = returns(tickers)
-    corr_matrix = returns_data.corr()
-    return corr_matrix
-
-# Matrice de covariance
-def covariance_matrix(tickers):
-    returns_data = returns(tickers)
-    cov_matrix = returns_data.cov()
-    return cov_matrix
-
-# Annualized expected returns
-def mu(tickers):
-    returns_data = returns(tickers)
-    mean_returns = returns_data.mean() * 252  # Annualized mean return
-    return mean_returns
-
-# Daily expected returns
-def day_mu(tickers):
-    returns_data = returns(tickers)
-    mean_returns = returns_data.mean()
-    return mean_returns
-
-# Sharpe Ratio
-
-def sharpe_ratio(tickers, rf ):
-    er = mu(tickers)
-    vol = volatility(tickers)
-    sharpe = (er - rf) / vol.iloc[-1]
-    return sharpe
-
+if __name__ == "__main__":
+    tickers = ["AAPL", "MSFT", "TSLA"]
+    print(get_prices(tickers))
